@@ -2,6 +2,8 @@
 
 A platformer example of using [LÖVE](https://love2d.org/).
 
+https://youtu.be/6lhZrk_73bo
+
 ## Credits
 ### Graphics
 - Platformer Grass Tileset by Summer Thaxton and Hannah Cohan - https://opengameart.org/content/platformer-grass-tileset
