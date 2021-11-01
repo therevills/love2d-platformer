@@ -12,7 +12,7 @@ function love.load()
     love.window.setTitle("Love2d Platformer")
     love.graphics.setDefaultFilter("nearest", "nearest")
 
-    camera = camera()
+    myCamera = camera()
     loadImages()
     loadMap()
     createPlayer(playerStartX, playerStartY)
@@ -28,7 +28,9 @@ end
 function loadMap()
     gameMap = sti('data/maps/1.lua')
 
-    world = wf.newWorld(0, 512, false)
+    local meter = 64
+    love.physics.setMeter(meter)
+    world = wf.newWorld(0, 9.81 * meter, false)
 
     collisionClasses = {
         PLATFORM = 1,
@@ -172,34 +174,34 @@ end
 
 function cameraLogic()
     local px, py = player.collider:getPosition()
-    camera:lookAt(px, py)
+    myCamera:lookAt(px, py)
 
     local w = love.graphics.getWidth()
     local h = love.graphics.getHeight()
 
-    if camera.x < w / 2 then
-        camera.x =  w / 2
+    if myCamera.x < w / 2 then
+        myCamera.x =  w / 2
     end
-    if camera.y < h / 2 then
-        camera.y =  h / 2
+    if myCamera.y < h / 2 then
+        myCamera.y =  h / 2
     end
 
     local mapW = gameMap.width * gameMap.tilewidth
     local mapH = gameMap.height * gameMap.tileheight
 
-    if camera.x > (mapW - w / 2) then
-        camera.x =  (mapW - w / 2)
+    if myCamera.x > (mapW - w / 2) then
+        myCamera.x =  (mapW - w / 2)
     end
-    if camera.y > (mapH - h / 2 )  then
-        camera.y =  (mapH - h / 2) 
+    if myCamera.y > (mapH - h / 2 )  then
+        myCamera.y =  (mapH - h / 2) 
     end
 end
 
 function love.draw()
     love.graphics.draw(images.background, 0, 0)
-    camera:attach()
+    myCamera:attach()
         gameMap:drawLayer(gameMap.layers["tiles"])
         local px, py = player.collider:getPosition()
         player.animation:draw(player.image, px, py, 0, player.scaleX, player.scaleY, player.w / 2, player.h / 2)
-    camera:detach()
+    myCamera:detach()
 end
